@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' gap://ready; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    connect-src 'self' http://www.staalburger.net/apps/pi.php;
+    ">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <title>Ample Pi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/pi.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src='js/jquery-1.11.1.min.js'></script>
+    <script src='js/jquery-ui.min.js'></script>
+    <script src='js/jquery.mobile-1.4.5.min.js'></script>
+    <script src='js/main.js'></script>
+    <script src="js/math.min.js"></script>
+    <script src="js/calculation.js"></script>
+    <script src="js/jquery.pietimer.js"></script>
+</head>
+
+<body onload="onLoad()">
+    <body>
+    <!-- Home -->
+    <div id="amplePi" data-role="page" data-theme="a" class="ui-page ui-page-active">
+        <div class="ui-panel-wrapper">
+            <div role="main" class="ui-content">
+                <div id="piTimerContainer">
+                    <div id="piTimer">
+
+                    </div>
+                </div>
+                <div id="mode" class="ui-grid-b online">
+                    <div class="ui-block-a live"><span id="scoreHead">STREAK</span><br /><span id="score">0</span></div>
+                    <div id="levelBlock" class="ui-block-b live"><span id="levelHead">LEVEL</span><br /><span
+                            id="level">0</span></div>
+                    <div class="ui-block-c live"><span id="recordHead">RECORD</span><br /><span id="rec">0</span></div>
+                </div>
+                <div id="pi" class="pi">3.14...</div>
+                <div id="timer" class="timer"></div>
+                <div id="keyPad" class="keyPad">
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="1" id="1" class="ui-btn ui-btn-inline ui-corner-all key">1</a>
+                        <a href="#" data-value="2" id="2" class="ui-btn ui-btn-inline ui-corner-all key">2</a>
+                        <a href="#" data-value="3" id="3" class="ui-btn ui-btn-inline ui-corner-all key">3</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="4" id="4" class="ui-btn ui-btn-inline ui-corner-all key">4</a>
+                        <a href="#" data-value="5" id="5" class="ui-btn ui-btn-inline ui-corner-all key">5</a>
+                        <a href="#" data-value="6" id="6" class="ui-btn ui-btn-inline ui-corner-all key">6</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="7" id="7" class="ui-btn ui-btn-inline ui-corner-all key">7</a>
+                        <a href="#" data-value="8" id="8" class="ui-btn ui-btn-inline ui-corner-all key">8</a>
+                        <a href="#" data-value="9" id="9" class="ui-btn ui-btn-inline ui-corner-all key">9</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a id="reset" class="ui-btn ui-btn-inline ui-corner-all ui-btn-b altKey">π</a>
+                        <a href="#" data-value="0" id="0" class="ui-btn ui-btn-inline ui-corner-all key">0</a>
+                        <a id="hint" class="ui-btn ui-btn-inline ui-corner-all ui-btn-c altKey">?</a>
+                    </div>
+                </div>
+                <div id="altKeyPad" class="keyPad hide">
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="7" id="07" class="ui-btn ui-btn-inline ui-corner-all key">7</a>
+                        <a href="#" data-value="8" id="08" class="ui-btn ui-btn-inline ui-corner-all key">8</a>
+                        <a href="#" data-value="9" id="09" class="ui-btn ui-btn-inline ui-corner-all key">9</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="4" id="04" class="ui-btn ui-btn-inline ui-corner-all key">4</a>
+                        <a href="#" data-value="5" id="05" class="ui-btn ui-btn-inline ui-corner-all key">5</a>
+                        <a href="#" data-value="6" id="06" class="ui-btn ui-btn-inline ui-corner-all key">6</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a href="#" data-value="1" id="01" class="ui-btn ui-btn-inline ui-corner-all key">1</a>
+                        <a href="#" data-value="2" id="02" class="ui-btn ui-btn-inline ui-corner-all key">2</a>
+                        <a href="#" data-value="3" id="03" class="ui-btn ui-btn-inline ui-corner-all key">3</a>
+                    </div>
+                    <div date-role="controlgroup" data-type="horizontal">
+                        <a id="xreset" class="ui-btn ui-btn-inline ui-corner-all ui-btn-b altKey">π</a>
+                        <a href="#" data-value="0" id="00" class="ui-btn ui-btn-inline ui-corner-all key">0</a>
+                        <a id="xhint" class="ui-btn ui-btn-inline ui-corner-all ui-btn-c altKey">?</a>
+                    </div>
+                </div>
+                <div id="message"></div>
+                <div id="Inconsistencies"></div>
+                <div id="strike-bar">
+                    <h3><span id="strike"></span></h3>
+                </div>
+                <a href="#" id="showMenu"
+                    class="ui-btn ui-corner-all ui-icon-bars ui-icon-big ui-btn-icon-notext vibraClick"></a>
+                <div id="popupMessage" data-role="popup" data-position-to="window" data-dismissible="false"
+                    style="min-width:280px;">
+                    <h1>Time's up.</h1>
+                    <h2>Go again?</h2>
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a"><a id="timerYes" data-theme="c" data-role="button"
+                                data-icon="check">Yes</a>
+                        </div>
+                        <div class="ui-block-b"><a id="timerNo" data-theme="b" data-role="button"
+                                data-icon="delete">No</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-role="panel" data-theme="a" id="left-panel" class="panel">
+            <ul data-role="controlgroup" class="left-panel-menu">
+                <!-- <li><a href="#" data-rel="close" class="ui-btn ui-icon-delete ui-btn-icon-right vibraClick">Close menu</a>
+                </li> -->
+                <li><a id="scrollPi" href="#" class="ui-btn vibraClick">Scroll Pi (10K)</a></li>
+                <li><a id="timePi" href="#" class="ui-btn vibraClick">Enable timer</a></li>
+                <li><a id="loadLevel" href="#" class="ui-btn vibraClick">Resume from level</a></li>
+                <li><a id="scrollPiLevel" href="#" class="ui-btn vibraClick">Scroll Pi from level</a></li>
+                <li><a id="scrollPiPosition" href="#" class="ui-btn vibraClick">Scroll Pi from position</a></li>
+                <li><a id="searchPi" href="#" class="ui-btn vibraClick">Search Pi</a></li>
+                <li><a id="zenPi" href="#" class="ui-btn vibraClick">Focus mode</a></li>
+                <li><a id="calculatePi" href="#" class="ui-btn vibraClick">Pi calculator</a></li>
+                <li><a id="piDayCountDown" href="#" class="ui-btn vibraClick">Pi day countdown</a></li>
+                <li><a id="settingsPi" href="#" class="ui-btn vibraClick">Settings</a></li>
+                <li><a id="aboutPi" href="#" class="ui-btn vibraClick">About Ample Pi</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Calculations -->
+    <div id="piCalculation" data-role="page" class="nav-back">
+        <div role="main" class="ui-content">
+            <h1 style="text-align: center;">Pi Calculations</h1>
+            <h2>Radius</h2>
+            <div class="dropdown ui-grid-a">
+                <div class="ui-block-a"><input type="number" autocomplete="off" class="numbersOnly" id="radius_input">
+                </div>
+                <div class="ui-block-b"><a href="#unit_radius" data-rel="popup" id="radius_unit"
+                        class="btn ui-btn ui-btn-a ui-corner-all"> cm </a></div>
+            </div>
+            <div id="unit_radius" data-role="popup">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;" class="unit-menu unit-menu-right"
+                    aria-labelledby="radius_unit">
+                    <li><a href="#" data-value="mm">millimeters(mm)</a></li>
+                    <li><a href="#" data-value="cm">centimeters(cm)</a></li>
+                    <li><a href="#" data-value="m">meters(m)</a></li>
+                    <li><a href="#" data-value="km">kilometers(km)</a></li>
+                    <li><a href="#" data-value="in">inches(in)</a></li>
+                    <li><a href="#" data-value="ft">feet(ft)</a></li>
+                    <li><a href="#" data-value="yd">yards(yd)</a></li>
+                    <li><a href="#" data-value="mi">miles(mi)</a></li>
+                </ul>
+            </div>
+            <h2>Diameter</h2>
+            <div class="dropdown ui-grid-a">
+                <div class="ui-block-a"><input type="number" autocomplete="off" class="numbersOnly" id="diameter_input">
+                </div>
+                <div class="ui-block-b"><a href="#unit_diameter" data-rel="popup" id="diameter_unit"
+                        class="btn ui-btn ui-btn-a ui-corner-all"> cm </a></div>
+            </div>
+            <div id="unit_diameter" data-role="popup">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;" id="unit_diameter"
+                    class="unit-menu unit-menu-right" aria-labelledby="diameter_unit">
+                    <li><a href="#" data-value="mm">millimeters(mm)</a></li>
+                    <li><a href="#" data-value="cm">centimeters(cm)</a></li>
+                    <li><a href="#" data-value="m">meters(m)</a></li>
+                    <li><a href="#" data-value="km">kilometers(km)</a></li>
+                    <li><a href="#" data-value="in">inches(in)</a></li>
+                    <li><a href="#" data-value="ft">feet(ft)</a></li>
+                    <li><a href="#" data-value="yd">yards(yd)</a></li>
+                    <li><a href="#" data-value="mi">miles(mi)</a></li>
+                </ul>
+            </div>
+            <h2>Circumference</h2>
+            <div class="dropdown ui-grid-a">
+                <div class="ui-block-a"><input type="number" autocomplete="off" class="numbersOnly"
+                        id="circumference_input">
+                </div>
+                <div class="ui-block-b"><a href="#unit_circumference" data-rel="popup" id="circumference_unit"
+                        class="btn ui-btn ui-btn-a  ui-corner-all"> cm </a></div>
+            </div>
+            <div id="unit_circumference" data-role="popup">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;" class="unit-menu unit-menu-right"
+                    aria-labelledby="circumference_unit">
+                    <li><a href="#" data-value="mm">millimeters(mm)</a></li>
+                    <li><a href="#" data-value="cm">centimeters(cm)</a></li>
+                    <li><a href="#" data-value="m">meters(m)</a></li>
+                    <li><a href="#" data-value="km">kilometers(km)</a></li>
+                    <li><a href="#" data-value="in">inches(in)</a></li>
+                    <li><a href="#" data-value="ft">feet(ft)</a></li>
+                    <li><a href="#" data-value="yd">yards(yd)</a></li>
+                    <li><a href="#" data-value="mi">miles(mi)</a></li>
+                </ul>
+            </div>
+            <h2>Area</h2>
+            <div class="dropdown ui-grid-a">
+                <div class="ui-block-a"><input type="number" autocomplete="off" class="numbersOnly" id="area_input">
+                </div>
+                <div class="ui-block-b"><a href="#unit_area" data-rel="popup" id="area_unit"
+                        class="btn ui-btn ui-btn-a ui-corner-all"> cm² </a></div>
+            </div>
+            <div id="unit_area" data-role="popup">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;" id="unit_area"
+                    class="unit-menu unit-menu-right" aria-labelledby="area_unit">
+                    <li><a href="#" data-value="mm²">square millimeters(mm²)</a></li>
+                    <li><a href="#" data-value="cm²">square centimeters(cm²)</a></li>
+                    <li><a href="#" data-value="dm²">square decimeters(dm²)</a></li>
+                    <li><a href="#" data-value="m²">square meters(m²)</a></li>
+                    <li><a href="#" data-value="km²">square kilometers(km²)</a></li>
+                    <li><a href="#" data-value="in²">square inches(in²)</a></li>
+                    <li><a href="#" data-value="ft²">square feet(ft²)</a></li>
+                    <li><a href="#" data-value="yd²">square yards(yd²)</a></li>
+                    <li><a href="#" data-value="mi²">square miles(mi²)</a></li>
+                </ul>
+            </div>
+            <a href="#" id="resetCalculation" class="btn ui-btn ui-btn-c ui-corner-all">Reset Calculation</a>
+        </div>
+    </div>
+    <!-- Count down to Pi day  -->
+    <div id="piDayCountDownTimer" data-role="page" class="nav-back">
+        <div role="main" class="ui-content centralize">
+            <h2 id="clockHead"></h2>
+            <div id="clockdiv">
+                <div>
+                    <span class="days"></span>
+                    <div class="smalltext">Days</div>
+                </div>
+                <div>
+                    <span class="hours"></span>
+                    <div class="smalltext">Hours</div>
+                </div>
+                <div>
+                    <span class="minutes"></span>
+                    <div class="smalltext">Minutes</div>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <div class="smalltext">Seconds</div>
+                </div>
+            </div>
+            <div>
+                <a id="resetPiCountdownTimer" href="#"
+                    class="ui-btn ui-btn-inline ui-icon-clock ui-btn-icon-right">Reset</a>
+            </div>
+            <div id="secretMessage" style="display: none;">
+                <h3>Pi day message:</h3>
+                <p>The pie recipe was a lie. It's irrational I know!</p>
+                <p>I hope you have a well rounded Pi day.</p>
+                <p>I'm so irrational, I would not know when to stop, so I think I'll end this message with a quote
+                    by
+                    Daniel Tammet...</p>
+                <p>"A bell cannot tell time, but it can be moved in just such a way as to say twelve o'clock –
+                    similarly, a man cannot calculate infinite numbers, but he can be moved in just such a way as to
+                    say Pi."</p>
+                <p>Return here tomorrow to reset the countdown timer for next year.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Settings -->
+    <div id="ampleSettings" data-role="page" class="nav-back">
+        <div role="main" class="ui-content">
+            <h1>Ample Settings</h1>
+            <label for="groupDigitsEvery">Group digits every:</label>
+            <input data-theme="d" type="range" name="groupDigitsEvery" id="groupDigitsEvery" min="2" max="12" value="5">
+            <label for="showHints">Digits per hint:</label>
+            <input data-theme="d" type="range" name="showHints" id="showHints" min="1" max="5" value="3">
+            <label for="strikeReset">Strikes before reset:</label>
+            <input data-theme="d" type="range" name="strikeReset" id="strikeReset" min="1" max="8" value="3">
+            <label for="countDownTime">Countdown seconds:</label>
+            <input data-theme="d" type="range" name="countDownTime" id="countDownTime" step="10" min="10" max="120"
+                value="30">
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="errorHint">Show hints on error:</label> <input data-theme="d" type="checkbox"
+                        data-role="flipswitch" name="errorHint" id="errorHint" data-on-text="Yes" data-off-text="No">
+                </div>
+                <div class="ui-block-b">
+                    <label for="strikeOutReset">Strike-out resets Pi:</label>
+                    <input data-theme="d" type="checkbox" data-role="flipswitch" name="strikeOutReset"
+                        id="strikeOutReset" data-on-text="Yes" data-off-text="No">
+                </div>
+            </div>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="scrollingAutoStart">Auto-start Pi scroller:</label> <input data-theme="d"
+                        type="checkbox" data-role="flipswitch" name="scrollingAutoStart" id="scrollingAutoStart"
+                        data-on-text="Yes" data-off-text="No">
+                </div>
+                <div class="ui-block-b">
+                    <label for="useAlternateKeypad">Use calculator keypad:</label>
+                    <input data-theme="d" type="checkbox" data-role="flipswitch" name="useAlternateKeypad"
+                        id="useAlternateKeypad" data-on-text="Yes" data-off-text="No">
+                </div>
+            </div>
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a id="defaultSettings" data-role="button" data-theme="c"
+                        data-icon="recycle">Defaults</a>
+                </div>
+                <div class="ui-block-b"><a id="saveSettings" data-role="button" data-icon="check">Save</a></div>
+            </div>
+            <hr />
+            <a id="resetScore" data-theme="b" data-role="button" data-icon="delete">Reset score.</a>
+        </div>
+    </div>
+    <!-- About -->
+    <div id="aboutAmplePi" data-role="page" class="nav-back">
+        <div role="main" class="ui-content">
+            <h3>Info:</h3>
+            <strong>Version</strong> 1.0.2<br />
+            <strong>Developer:</strong> Burger Vivier T/A StaalBurger.Net<br />
+            <strong>Follow</strong> @Staaltjie on Twitter
+            <hr />
+            <p>If you like this app, please consider rating and leaving a comment to help others make up their mind. I
+                value your feedback and will use it to improve Ample Pi.</p>
+            <hr />
+            <h3>About Pi day:</h3>
+            <p>Celebrated by millions of math students and teachers since 1988, 3/14 have become quite an eventful
+                date over the years.</p>
+            <p>Apart from being Albert Einstein's birthday, Pi enthusiasts would gather to partake in various activities
+                like reciting Pi.</p>
+            <p>Something Ample Pi might help you with :)</p>
+            <p>On Pi day, 14 March 2014, Google announced that one of their employees have calculated Pi to 31 trillion
+                digits.</p>
+            <p>To put that in perspective, 1 trillion seconds amounts to 31 709 years.</p>
+            <p>That's insane!</p>
+            <p>So if you too are looking forward to Pi day. Keep a close eye on the <a id="ampleTimer">Pi day
+                    countdown</a> right here
+                on Ample Pi and be sure to check back on Pi day this year when Ample Pi will reveal a hidden message and
+                my secret pie recipe.
+            </p>
+            <p>
+                Remember to take a screenshot and tweet @Staaltjie #amplepiday.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="3" id="net.staalburger.pi" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Ample Pi</name>
+    <description>
+        Ample Pi has enough digits of pi. Challenge mode is the default until you make a mistake. How far wil you make it?
+    </description>
+    <author email="burger@staalburger.net" href="http://www.staalburger.net">
+        Burger Vivier
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access origin="http://www.staalburger.net/apps" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-navigation href="http://www.staalburger.net/apps/*" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.3.4" />
+    <platform name="android">
+        <platform name="android">
+        <icon background="res/mipmap-mdpi/ic_launcher_background.png" density="mdpi" foreground="res/mipmap-mdpi/ic_launcher_foreground.png" />
+        <icon background="res/mipmap-hdpi/ic_launcher_background.png" density="hdpi" foreground="res/mipmap-hdpi/ic_launcher_foreground.png" />
+        <icon background="res/mipmap-xhdpi/ic_launcher_background.png" density="xhdpi" foreground="res/mipmap-xhdpi/ic_launcher_foreground.png" />
+        <icon background="res/mipmap-xxhdpi/ic_launcher_background.png" density="xxhdpi" foreground="res/mipmap-xxhdpi/ic_launcher_foreground.png" />
+        <icon background="res/mipmap-xxxhdpi/ic_launcher_background.png" density="xxxhdpi" foreground="res/mipmap-xxxhdpi/ic_launcher_foreground.png" />
+</platform>
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+    </edit-config>
+</widget>

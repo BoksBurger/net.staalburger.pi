@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Ample Pi",
+  "short_name": "Ample Pi",
+  "version": "net.staalburger.pi",
+  "description": "Ample Pi has enough digits of pi. Challenge mode is the default until you make a mistake. How far wil you make it?",
+  "author": "Burger Vivier",
+  "icons": [],
+  "start_url": "index.html"
+}
